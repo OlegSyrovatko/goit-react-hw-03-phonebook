@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
+import Modal from 'components/Modal';
 import ContactList from 'components/ContactList';
 import Filter from 'components/Filter';
 import ContactForm from 'components/ContactForm';
@@ -9,6 +10,13 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
+    showModal: false,
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
   };
 
   componentDidMount() {
@@ -65,10 +73,21 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, showModal } = this.state;
     const visibleContacts = this.filterContacts();
+
     return (
       <Book>
+        <button type="button" onClick={this.toggleModal}>
+          ContactForm
+        </button>
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <button type="button" onClick={this.toggleModal}>
+              Shut
+            </button>
+          </Modal>
+        )}
         <ContactForm onSubmit={this.addContact} />
         {this.state.contacts.length > 0 && (
           <>
