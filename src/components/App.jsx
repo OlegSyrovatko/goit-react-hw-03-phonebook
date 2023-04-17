@@ -4,7 +4,13 @@ import Modal from 'components/Modal';
 import ContactList from 'components/ContactList';
 import Filter from 'components/Filter';
 import ContactForm from 'components/ContactForm';
-import { Book } from './App.styled';
+import {
+  Book,
+  Button,
+  CloseButton,
+  ModalBlock,
+  ModalItems,
+} from './App.styled';
 
 export class App extends Component {
   state = {
@@ -52,6 +58,7 @@ export class App extends Component {
     this.setState(({ contacts }) => ({
       contacts: [{ id: nanoid(), name, number }, ...contacts],
     }));
+    this.toggleModal();
   };
 
   handleChange = e => {
@@ -78,17 +85,23 @@ export class App extends Component {
 
     return (
       <Book>
-        <button type="button" onClick={this.toggleModal}>
-          ContactForm
-        </button>
+        <h1>Phonebook</h1>
+        <Button type="button" onClick={this.toggleModal}>
+          Add Contact
+        </Button>
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            <button type="button" onClick={this.toggleModal}>
-              Shut
-            </button>
+            <ModalBlock>
+              <ModalItems>
+                <CloseButton type="button" onClick={this.toggleModal}>
+                  Close
+                </CloseButton>
+                <ContactForm onSubmit={this.addContact} />
+              </ModalItems>
+            </ModalBlock>
           </Modal>
         )}
-        <ContactForm onSubmit={this.addContact} />
+
         {this.state.contacts.length > 0 && (
           <>
             <h2>Contacts</h2>

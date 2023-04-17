@@ -24,7 +24,6 @@ class ContactForm extends Component {
     const { name, number } = this.state;
     return (
       <>
-        <h1>Phonebook</h1>
         <Form onSubmit={this.handleSubmit}>
           <Label htmlFor="name">
             <p>Name:</p>
